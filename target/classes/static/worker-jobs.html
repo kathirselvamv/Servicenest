@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Jobs - ServiceNest</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <h1 class="logo">🏠 ServiceNest</h1>
+            <div class="nav-links">
+                <a href="worker-dashboard.html" class="nav-link">Dashboard</a>
+                <a href="worker-jobs.html" class="nav-link active">My Jobs</a>
+                <a href="worker-schedule.html" class="nav-link">Schedule</a>
+                <a href="worker-earnings.html" class="nav-link">Earnings</a>
+                <a href="worker-profile.html" class="nav-link">Profile</a>
+                <a href="#" onclick="logout()" class="nav-link">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="page-header">
+        <div class="container">
+            <h1>My Jobs</h1>
+            <p>Manage your service assignments and job requests</p>
+        </div>
+    </div>
+
+    <div class="jobs-container">
+        <div class="container">
+            <!-- Job Tabs -->
+            <div class="jobs-tabs">
+                <button class="tab-btn active" data-tab="active">Active Jobs</button>
+                <button class="tab-btn" data-tab="pending">Pending Requests</button>
+                <button class="tab-btn" data-tab="completed">Completed</button>
+                <button class="tab-btn" data-tab="cancelled">Cancelled</button>
+            </div>
+
+            <!-- Active Jobs Tab -->
+            <div class="tab-content active" id="activeTab">
+                <div class="jobs-list" id="activeJobs">
+                    <!-- Active jobs will be loaded here -->
+                    <div class="empty-state">
+                        <div class="empty-icon">🛠️</div>
+                        <h3>No Active Jobs</h3>
+                        <p>You don't have any active jobs at the moment.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pending Requests Tab -->
+            <div class="tab-content" id="pendingTab">
+                <div class="jobs-list" id="pendingJobs">
+                    <!-- Pending job requests will be loaded here -->
+                    <div class="empty-state">
+                        <div class="empty-icon">⏳</div>
+                        <h3>No Pending Requests</h3>
+                        <p>There are no new job requests for you at the moment.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Completed Jobs Tab -->
+            <div class="tab-content" id="completedTab">
+                <div class="jobs-list" id="completedJobs">
+                    <!-- Completed jobs will be loaded here -->
+                    <div class="empty-state">
+                        <div class="empty-icon">✅</div>
+                        <h3>No Completed Jobs</h3>
+                        <p>You haven't completed any jobs yet.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Job Details Modal -->
+            <div id="jobModal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h2>Job Details</h2>
+                    <div id="jobDetails">
+                        <!-- Job details will be loaded here -->
+                    </div>
+                    <div class="modal-actions" id="jobActions">
+                        <!-- Action buttons will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 ServiceNest. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="worker-jobs.js"></script>
+</body>
+</html>

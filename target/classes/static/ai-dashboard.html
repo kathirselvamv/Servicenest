@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Dashboard - ServiceNest</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="ai-dashboard.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <h1 class="logo">🤖 ServiceNest AI</h1>
+            <div class="nav-links">
+                <a href="ai-dashboard.html" class="nav-link active">AI Dashboard</a>
+                <a href="services.html" class="nav-link">Services</a>
+                <a href="smart-booking.html" class="nav-link">Smart Booking</a>
+                <a href="ai-chat.html" class="nav-link">AI Assistant</a>
+                <a href="#" onclick="logout()" class="nav-link">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="ai-dashboard">
+        <div class="container">
+            <!-- AI Welcome Section -->
+            <div class="ai-welcome">
+                <div class="welcome-content">
+                    <h1>Welcome to Your AI-Powered Home <span class="ai-gradient">Service Hub</span></h1>
+                    <p>Your personal AI assistant has analyzed your home and prepared smart recommendations</p>
+                    <div class="ai-status">
+                        <span class="status-indicator active"></span>
+                        <span>AI Assistant: Online & Learning</span>
+                    </div>
+                </div>
+                <div class="ai-avatar">
+                    <div class="avatar">🤖</div>
+                </div>
+            </div>
+
+            <!-- AI Insights Grid -->
+            <div class="ai-insights-grid">
+                <div class="insight-card predictive">
+                    <div class="insight-header">
+                        <h3>🔮 Predictive Maintenance</h3>
+                        <span class="ai-confidence">92% match</span>
+                    </div>
+                    <p>Based on your service history, your AC needs servicing in 2 weeks</p>
+                    <div class="insight-actions">
+                        <button class="btn primary" onclick="schedulePredictiveMaintenance()">Schedule Now</button>
+                        <button class="btn outline">Remind Later</button>
+                    </div>
+                </div>
+
+                <div class="insight-card seasonal">
+                    <div class="insight-header">
+                        <h3>🌧️ Seasonal Alert</h3>
+                        <span class="ai-confidence">88% match</span>
+                    </div>
+                    <p>Monsoon preparation: Waterproofing & drainage check recommended</p>
+                    <div class="insight-actions">
+                        <button class="btn primary" onclick="viewSeasonalServices()">View Services</button>
+                    </div>
+                </div>
+
+                <div class="insight-card savings">
+                    <div class="insight-header">
+                        <h3>💰 Smart Savings</h3>
+                        <span class="ai-confidence">95% match</span>
+                    </div>
+                    <p>Bundle plumbing + electrical = Save ₹1,100 with AI-optimized package</p>
+                    <div class="insight-actions">
+                        <button class="btn primary" onclick="viewSmartBundles()">View Bundle</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI Service Recommendations -->
+            <div class="ai-recommendations-section">
+                <div class="section-header">
+                    <h2>🤖 AI-Personalized Recommendations</h2>
+                    <p>Curated specifically for your home and usage patterns</p>
+                </div>
+
+                <div class="recommendations-tabs">
+                    <button class="tab-btn active" data-tab="personalized">For You</button>
+                    <button class="tab-btn" data-tab="seasonal">Seasonal</button>
+                    <button class="tab-btn" data-tab="trending">Trending</button>
+                    <button class="tab-btn" data-tab="bundles">Smart Bundles</button>
+                </div>
+
+                <div class="recommendations-content">
+                    <div class="tab-content active" id="personalizedTab">
+                        <div class="ai-services-grid" id="personalizedServices">
+                            <!-- AI will load personalized services here -->
+                        </div>
+                    </div>
+                    <div class="tab-content" id="seasonalTab">
+                        <div class="ai-services-grid" id="seasonalServices">
+                            <!-- Seasonal services will load here -->
+                        </div>
+                    </div>
+                    <div class="tab-content" id="trendingTab">
+                        <div class="ai-services-grid" id="trendingServices">
+                            <!-- Trending services will load here -->
+                        </div>
+                    </div>
+                    <div class="tab-content" id="bundlesTab">
+                        <div class="ai-bundles-grid" id="smartBundles">
+                            <!-- Smart bundles will load here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI Home Health Score -->
+            <div class="home-health-section">
+                <div class="health-score-card">
+                    <div class="score-header">
+                        <h3>🏠 Your Home Health Score</h3>
+                        <div class="score-value">
+                            <span class="score">87</span>
+                            <span class="score-label">/100</span>
+                        </div>
+                    </div>
+                    <div class="score-breakdown">
+                        <div class="breakdown-item">
+                            <span class="category">Plumbing</span>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 92%"></div>
+                            </div>
+                            <span class="score">92%</span>
+                        </div>
+                        <div class="breakdown-item">
+                            <span class="category">Electrical</span>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 78%"></div>
+                            </div>
+                            <span class="score">78%</span>
+                        </div>
+                        <div class="breakdown-item">
+                            <span class="category">HVAC</span>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 85%"></div>
+                            </div>
+                            <span class="score">85%</span>
+                        </div>
+                        <div class="breakdown-item">
+                            <span class="category">Cleanliness</span>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 95%"></div>
+                            </div>
+                            <span class="score">95%</span>
+                        </div>
+                    </div>
+                    <div class="health-insights">
+                        <p>💡 <strong>AI Insight:</strong> Electrical systems need attention. Consider safety audit.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick AI Actions -->
+            <div class="quick-ai-actions">
+                <h3>⚡ Quick AI Actions</h3>
+                <div class="actions-grid">
+                    <button class="ai-action-btn" onclick="openAIChat()">
+                        <span class="action-icon">💬</span>
+                        <span>Ask AI Assistant</span>
+                    </button>
+                    <button class="ai-action-btn" onclick="scanHomeIssues()">
+                        <span class="action-icon">📱</span>
+                        <span>Scan Home Issues</span>
+                    </button>
+                    <button class="ai-action-btn" onclick="emergencyConnect()">
+                        <span class="action-icon">🚨</span>
+                        <span>Emergency Connect</span>
+                    </button>
+                    <button class="ai-action-btn" onclick="scheduleAI()">
+                        <span class="action-icon">📅</span>
+                        <span>Smart Scheduling</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI Chat Widget -->
+    <div class="ai-chat-widget" id="chatWidget">
+        <div class="chat-header">
+            <h4>ServiceNest AI Assistant</h4>
+            <button class="close-chat" onclick="closeChat()">×</button>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <div class="message ai-message">
+                <div class="message-content">
+                    Hello! I'm your ServiceNest AI assistant. I can help you book services, get quotes, or solve home issues. How can I help you today?
+                </div>
+            </div>
+        </div>
+        <div class="chat-input">
+            <input type="text" id="chatInput" placeholder="Ask me anything about home services...">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <script src="ai-dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - ServiceNest</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <h1 class="logo">🏠 ServiceNest</h1>
+            <div class="nav-links">
+                <a href="user-dashboard.html" class="nav-link">Dashboard</a>
+                <a href="services.html" class="nav-link">Book Service</a>
+                <a href="my-bookings.html" class="nav-link">My Bookings</a>
+                <a href="profile.html" class="nav-link active">Profile</a>
+                <a href="#" onclick="logout()" class="nav-link">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="page-header">
+        <div class="container">
+            <h1>My Profile</h1>
+            <p>Manage your personal information and preferences</p>
+        </div>
+    </div>
+
+    <div class="profile-container">
+        <div class="container">
+            <div class="profile-content">
+                <!-- Profile Sidebar -->
+                <div class="profile-sidebar">
+                    <div class="profile-card">
+                        <div class="profile-avatar">
+                            <div class="avatar-placeholder">👤</div>
+                            <button class="edit-avatar-btn">Edit</button>
+                        </div>
+                        <div class="profile-info">
+                            <h3 id="userName">User Name</h3>
+                            <p id="userEmail">user@example.com</p>
+                            <p class="user-role">Customer</p>
+                        </div>
+                    </div>
+
+                    <nav class="profile-nav">
+                        <a href="#personal" class="nav-item active">Personal Info</a>
+                        <a href="#address" class="nav-item">Addresses</a>
+                        <a href="#preferences" class="nav-item">Preferences</a>
+                        <a href="#security" class="nav-item">Security</a>
+                        <a href="#notifications" class="nav-item">Notifications</a>
+                    </nav>
+                </div>
+
+                <!-- Profile Content -->
+                <div class="profile-main">
+                    <!-- Personal Information Tab -->
+                    <div class="tab-content active" id="personal">
+                        <h2>Personal Information</h2>
+                        <form class="profile-form" id="personalForm">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="firstName">First Name</label>
+                                    <input type="text" id="firstName" name="firstName" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="lastName">Last Name</label>
+                                    <input type="text" id="lastName" name="lastName" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email">Email Address</label>
+                                <input type="email" id="email" name="email" required readonly>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="phone">Phone Number</label>
+                                <input type="tel" id="phone" name="phone" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="dob">Date of Birth</label>
+                                <input type="date" id="dob" name="dob">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="gender">Gender</label>
+                                <select id="gender" name="gender">
+                                    <option value="">Select Gender</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                    <option value="other">Other</option>
+                                    <option value="prefer-not-to-say">Prefer not to say</option>
+                                </select>
+                            </div>
+
+                            <button type="submit" class="btn primary">Save Changes</button>
+                        </form>
+                    </div>
+
+                    <!-- Addresses Tab -->
+                    <div class="tab-content" id="address">
+                        <div class="tab-header">
+                            <h2>My Addresses</h2>
+                            <button class="btn primary" onclick="showAddAddressModal()">Add New Address</button>
+                        </div>
+                        <div class="addresses-list" id="addressesList">
+                            <!-- Addresses will be loaded here -->
+                            <div class="empty-state">
+                                <p>No addresses saved yet</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Preferences Tab -->
+                    <div class="tab-content" id="preferences">
+                        <h2>Service Preferences</h2>
+                        <form class="preferences-form" id="preferencesForm">
+                            <div class="form-group">
+                                <label>Preferred Communication</label>
+                                <div class="checkbox-group">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="communication" value="email" checked>
+                                        <span>Email</span>
+                                    </label>
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="communication" value="sms" checked>
+                                        <span>SMS</span>
+                                    </label>
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="communication" value="whatsapp">
+                                        <span>WhatsApp</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Service Notifications</label>
+                                <div class="checkbox-group">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="notifications" value="reminders" checked>
+                                        <span>Service Reminders</span>
+                                    </label>
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="notifications" value="updates" checked>
+                                        <span>Status Updates</span>
+                                    </label>
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="notifications" value="promotions">
+                                        <span>Promotions & Offers</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="language">Preferred Language</label>
+                                <select id="language" name="language">
+                                    <option value="english">English</option>
+                                    <option value="hindi">Hindi</option>
+                                    <option value="marathi">Marathi</option>
+                                    <option value="tamil">Tamil</option>
+                                </select>
+                            </div>
+
+                            <button type="submit" class="btn primary">Save Preferences</button>
+                        </form>
+                    </div>
+
+                    <!-- Security Tab -->
+                    <div class="tab-content" id="security">
+                        <h2>Security Settings</h2>
+                        <div class="security-actions">
+                            <div class="security-item">
+                                <h3>Change Password</h3>
+                                <p>Update your password regularly to keep your account secure</p>
+                                <button class="btn outline" onclick="showChangePasswordModal()">Change Password</button>
+                            </div>
+
+                            <div class="security-item">
+                                <h3>Two-Factor Authentication</h3>
+                                <p>Add an extra layer of security to your account</p>
+                                <button class="btn outline">Enable 2FA</button>
+                            </div>
+
+                            <div class="security-item">
+                                <h3>Login Activity</h3>
+                                <p>Review your recent login activity</p>
+                                <button class="btn outline">View Activity</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Notifications Tab -->
+                    <div class="tab-content" id="notifications">
+                        <h2>Notification Settings</h2>
+                        <form class="notifications-form" id="notificationsForm">
+                            <div class="notification-category">
+                                <h3>Email Notifications</h3>
+                                <div class="notification-options">
+                                    <label class="switch">
+                                        <input type="checkbox" name="email_bookings" checked>
+                                        <span class="slider"></span>
+                                        <span class="label">Booking confirmations and updates</span>
+                                    </label>
+                                    <label class="switch">
+                                        <input type="checkbox" name="email_promotions" checked>
+                                        <span class="slider"></span>
+                                        <span class="label">Promotional offers</span>
+                                    </label>
+                                    <label class="switch">
+                                        <input type="checkbox" name="email_newsletter">
+                                        <span class="slider"></span>
+                                        <span class="label">Newsletter</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="notification-category">
+                                <h3>Push Notifications</h3>
+                                <div class="notification-options">
+                                    <label class="switch">
+                                        <input type="checkbox" name="push_reminders" checked>
+                                        <span class="slider"></span>
+                                        <span class="label">Service reminders</span>
+                                    </label>
+                                    <label class="switch">
+                                        <input type="checkbox" name="push_updates" checked>
+                                        <span class="slider"></span>
+                                        <span class="label">Real-time updates</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn primary">Save Notification Settings</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Address Modal -->
+    <div id="addAddressModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Add New Address</h2>
+            <form id="addressForm">
+                <div class="form-group">
+                    <label for="addressLabel">Address Label</label>
+                    <input type="text" id="addressLabel" name="label" placeholder="Home, Office, etc." required>
+                </div>
+
+                <div class="form-group">
+                    <label for="addressLine1">Address Line 1</label>
+                    <input type="text" id="addressLine1" name="line1" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="addressLine2">Address Line 2</label>
+                    <input type="text" id="addressLine2" name="line2">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="city">City</label>
+                        <input type="text" id="city" name="city" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="state">State</label>
+                        <input type="text" id="state" name="state" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="pincode">PIN Code</label>
+                        <input type="text" id="pincode" name="pincode" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="landmark">Landmark</label>
+                        <input type="text" id="landmark" name="landmark">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="checkbox">
+                        <input type="checkbox" name="isDefault">
+                        <span>Set as default address</span>
+                    </label>
+                </div>
+
+                <button type="submit" class="btn primary">Save Address</button>
+            </form>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 ServiceNest. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="profile.js"></script>
+</body>
+</html>

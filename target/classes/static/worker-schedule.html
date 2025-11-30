@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Schedule - ServiceNest</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <h1 class="logo">🏠 ServiceNest</h1>
+            <div class="nav-links">
+                <a href="worker-dashboard.html" class="nav-link">Dashboard</a>
+                <a href="worker-jobs.html" class="nav-link">My Jobs</a>
+                <a href="worker-schedule.html" class="nav-link active">Schedule</a>
+                <a href="worker-earnings.html" class="nav-link">Earnings</a>
+                <a href="worker-profile.html" class="nav-link">Profile</a>
+                <a href="#" onclick="logout()" class="nav-link">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="page-header">
+        <div class="container">
+            <h1>My Schedule</h1>
+            <p>Manage your availability and upcoming appointments</p>
+        </div>
+    </div>
+
+    <div class="schedule-container">
+        <div class="container">
+            <div class="schedule-header">
+                <div class="schedule-controls">
+                    <button id="prevWeek" class="btn outline"><i class="fas fa-chevron-left"></i> Previous</button>
+                    <h2 id="currentWeek"></h2>
+                    <button id="nextWeek" class="btn outline">Next <i class="fas fa-chevron-right"></i></button>
+                </div>
+                <button id="setAvailability" class="btn primary">Set Availability</button>
+            </div>
+
+            <!-- Weekly Schedule -->
+            <div class="weekly-schedule">
+                <div class="schedule-grid" id="scheduleGrid">
+                    <!-- Schedule will be generated dynamically -->
+                </div>
+            </div>
+
+            <!-- Today's Appointments -->
+            <div class="appointments-section">
+                <h3>Today's Appointments</h3>
+                <div class="appointments-list" id="todayAppointments">
+                    <!-- Today's appointments will be loaded here -->
+                    <div class="empty-state">
+                        <p>No appointments scheduled for today</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Upcoming Appointments -->
+            <div class="appointments-section">
+                <h3>Upcoming Appointments</h3>
+                <div class="appointments-list" id="upcomingAppointments">
+                    <!-- Upcoming appointments will be loaded here -->
+                    <div class="empty-state">
+                        <p>No upcoming appointments</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Availability Modal -->
+    <div id="availabilityModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Set Your Availability</h2>
+            <form id="availabilityForm">
+                <div class="form-group">
+                    <label>Working Days</label>
+                    <div class="days-selector">
+                        <label class="day-checkbox">
+                            <input type="checkbox" name="days" value="monday" checked>
+                            <span>Mon</span>
+                        </label>
+                        <label class="day-checkbox">
+                            <input type="checkbox" name="days" value="tuesday" checked>
+                            <span>Tue</span>
+                        </label>
+                        <label class="day-checkbox">
+                            <input type="checkbox" name="days" value="wednesday" checked>
+                            <span>Wed</span>
+                        </label>
+                        <label class="day-checkbox">
+                            <input type="checkbox" name="days" value="thursday" checked>
+                            <span>Thu</span>
+                        </label>
+                        <label class="day-checkbox">
+                            <input type="checkbox" name="days" value="friday" checked>
+                            <span>Fri</span>
+                        </label>
+                        <label class="day-checkbox">
+                            <input type="checkbox" name="days" value="saturday" checked>
+                            <span>Sat</span>
+                        </label>
+                        <label class="day-checkbox">
+                            <input type="checkbox" name="days" value="sunday">
+                            <span>Sun</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Working Hours</label>
+                    <div class="time-slots">
+                        <select name="startTime" required>
+                            <option value="07:00">7:00 AM</option>
+                            <option value="08:00">8:00 AM</option>
+                            <option value="09:00" selected>9:00 AM</option>
+                            <option value="10:00">10:00 AM</option>
+                        </select>
+                        <span>to</span>
+                        <select name="endTime" required>
+                            <option value="17:00">5:00 PM</option>
+                            <option value="18:00">6:00 PM</option>
+                            <option value="19:00">7:00 PM</option>
+                            <option value="20:00" selected>8:00 PM</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Break Time</label>
+                    <div class="time-slots">
+                        <select name="breakStart">
+                            <option value="">No Break</option>
+                            <option value="13:00">1:00 PM</option>
+                            <option value="13:30">1:30 PM</option>
+                        </select>
+                        <span>to</span>
+                        <select name="breakEnd">
+                            <option value="">No Break</option>
+                            <option value="14:00">2:00 PM</option>
+                            <option value="14:30">2:30 PM</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn primary">Save Availability</button>
+            </form>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 ServiceNest. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="worker-schedule.js"></script>
+</body>
+</html>

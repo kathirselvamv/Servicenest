@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ServiceNest - Register</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏠</text></svg>">
+    <style>
+        /* Base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Navigation */
+        .navbar {
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: #555;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: #3498db;
+        }
+
+        .register-btn {
+            background-color: #3498db;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        .register-btn:hover {
+            background-color: #2980b9;
+        }
+
+        /* Auth Container */
+        .auth-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .auth-box {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .auth-box h2 {
+            text-align: center;
+            margin-bottom: 10px;
+            color: #2c3e50;
+            font-size: 2rem;
+        }
+
+        .auth-subtitle {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #666;
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #2c3e50;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        /* Worker-specific fields */
+        .worker-fields {
+            display: none;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 10px;
+            border-left: 4px solid #3498db;
+        }
+
+        .worker-fields h4 {
+            margin-bottom: 15px;
+            color: #2c3e50;
+            text-align: center;
+        }
+
+        /* Required field indicator */
+        .required {
+            color: #e74c3c;
+        }
+
+        /* Password strength indicator */
+        .password-strength {
+            height: 4px;
+            background: #eee;
+            border-radius: 2px;
+            margin-top: 5px;
+            overflow: hidden;
+        }
+
+        .password-strength-bar {
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s, background-color 0.3s;
+        }
+
+        .strength-weak { width: 33%; background-color: #e74c3c; }
+        .strength-medium { width: 66%; background-color: #f39c12; }
+        .strength-strong { width: 100%; background-color: #2ecc71; }
+
+        /* Role-specific info */
+        .role-info {
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 6px;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .role-info h4 {
+            margin-bottom: 8px;
+            color: #2c3e50;
+        }
+
+        .role-info ul {
+            padding-left: 20px;
+            color: #666;
+        }
+
+        .role-info li {
+            margin-bottom: 5px;
+        }
+
+        /* Button Styles */
+        .auth-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+
+        .auth-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+        }
+
+        .auth-btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* Message Styles */
+        .message {
+            padding: 12px;
+            border-radius: 6px;
+            margin: 20px 0;
+            text-align: center;
+            display: none;
+        }
+
+        .message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            display: block;
+        }
+
+        .message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            display: block;
+        }
+
+        /* Auth Link */
+        .auth-link {
+            text-align: center;
+            margin-top: 25px;
+            color: #666;
+        }
+
+        .auth-link a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .auth-link a:hover {
+            text-decoration: underline;
+        }
+
+        /* Loading spinner */
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 10px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .auth-box {
+                padding: 30px 20px;
+                margin: 20px;
+                max-width: 100%;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .auth-container {
+                padding: 20px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <h1 class="logo">🏠 ServiceNest</h1>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="login.html" class="nav-link">Login</a>
+                <a href="register.html" class="nav-link active register-btn">Register</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="auth-container">
+        <div class="auth-box">
+            <h2>Join ServiceNest</h2>
+            <p class="auth-subtitle">Create your account</p>
+
+            <form id="registerForm">
+                <div class="form-group">
+                    <label for="regRole">I want to join as <span class="required">*</span></label>
+                    <select id="regRole" required>
+                        <option value="">Select Role</option>
+                        <option value="USER">Customer</option>
+                        <option value="WORKER">Service Provider</option>
+                    </select>
+                    
+                    <!-- Role-specific information -->
+                    <div id="userInfo" class="role-info">
+                        <h4>As a Customer, you can:</h4>
+                        <ul>
+                            <li>Book home services instantly</li>
+                            <li>Track service requests</li>
+                            <li>Rate and review service providers</li>
+                            <li>Manage your bookings</li>
+                        </ul>
+                    </div>
+                    
+                    <div id="workerInfo" class="role-info">
+                        <h4>As a Service Provider, you can:</h4>
+                        <ul>
+                            <li>Offer your services to customers</li>
+                            <li>Manage service requests</li>
+                            <li>Build your professional profile</li>
+                            <li>Get rated by customers</li>
+                            <li>Earn money for your skills</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="regEmail">Email Address <span class="required">*</span></label>
+                    <input type="email" id="regEmail" placeholder="Enter your email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="regPassword">Password <span class="required">*</span></label>
+                    <input type="password" id="regPassword" placeholder="Create a password (min. 6 characters)" required minlength="6">
+                    <div class="password-strength">
+                        <div class="password-strength-bar" id="passwordStrength"></div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password <span class="required">*</span></label>
+                    <input type="password" id="confirmPassword" placeholder="Confirm your password" required>
+                </div>
+
+                <!-- Worker-specific fields -->
+                <div id="workerFields" class="worker-fields">
+                    <h4>Professional Information</h4>
+                    
+                    <div class="form-group">
+                        <label for="professionalTitle">Professional Title <span class="required">*</span></label>
+                        <input type="text" id="professionalTitle" placeholder="e.g., Senior Plumber, Electrician">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="experience">Experience <span class="required">*</span></label>
+                        <select id="experience">
+                            <option value="">Select Experience</option>
+                            <option value="0-1">0-1 years</option>
+                            <option value="1-3">1-3 years</option>
+                            <option value="3-5">3-5 years</option>
+                            <option value="5-10">5-10 years</option>
+                            <option value="10+">10+ years</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phoneNumber">Phone Number <span class="required">*</span></label>
+                        <input type="tel" id="phoneNumber" placeholder="+91 XXXXX XXXXX">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="serviceAreas">Service Areas</label>
+                        <input type="text" id="serviceAreas" placeholder="e.g., Chennai, Plumbing, Electrical">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="hourlyRate">Hourly Rate (₹)</label>
+                        <input type="number" id="hourlyRate" placeholder="e.g., 500" min="0" step="50">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="skills">Skills</label>
+                        <textarea id="skills" placeholder="List your skills (e.g., Pipe fitting, Wiring, Installation)"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="bio">Professional Bio</label>
+                        <textarea id="bio" placeholder="Describe your experience and expertise..."></textarea>
+                    </div>
+                </div>
+
+                <button type="submit" class="auth-btn" id="submitBtn">
+                    <span class="btn-text">Create Account</span>
+                </button>
+            </form>
+
+            <div id="regMessage" class="message"></div>
+
+            <p class="auth-link">
+                Already have an account? 
+                <a href="login.html">Sign in here</a>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        function showMessage(text, type) {
+            const messageDiv = document.getElementById("regMessage");
+            messageDiv.innerHTML = text;
+            messageDiv.className = `message ${type}`;
+            messageDiv.style.display = 'block';
+        }
+
+        function setLoadingState(loading) {
+            const submitBtn = document.getElementById('submitBtn');
+            const btnText = submitBtn.querySelector('.btn-text');
+            
+            if (loading) {
+                submitBtn.disabled = true;
+                btnText.innerHTML = '<span class="spinner"></span>Creating Account...';
+            } else {
+                submitBtn.disabled = false;
+                btnText.textContent = 'Create Account';
+            }
+        }
+
+        function validateWorkerFields() {
+            const professionalTitle = document.getElementById('professionalTitle').value;
+            const experience = document.getElementById('experience').value;
+            const phoneNumber = document.getElementById('phoneNumber').value;
+
+            if (!professionalTitle.trim()) {
+                showMessage("Professional title is required for service providers", "error");
+                return false;
+            }
+            if (!experience) {
+                showMessage("Please select your experience level", "error");
+                return false;
+            }
+            if (!phoneNumber.trim()) {
+                showMessage("Phone number is required for service providers", "error");
+                return false;
+            }
+
+            return true;
+        }
+
+        async function registerUser(event) {
+            event.preventDefault();
+            
+            const role = document.getElementById("regRole").value;
+            const email = document.getElementById("regEmail").value;
+            const password = document.getElementById("regPassword").value;
+            const confirmPassword = document.getElementById("confirmPassword").value;
+
+            // Reset message
+            showMessage('', '');
+
+            // Basic validation
+            if (!role || !email || !password || !confirmPassword) {
+                showMessage("All fields are required", "error");
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                showMessage("Passwords do not match", "error");
+                return;
+            }
+
+            if (password.length < 6) {
+                showMessage("Password must be at least 6 characters long", "error");
+                return;
+            }
+
+            // Worker-specific validation
+            if (role === 'WORKER') {
+                const professionalTitle = document.getElementById('professionalTitle').value;
+                const experience = document.getElementById('experience').value;
+                const phoneNumber = document.getElementById('phoneNumber').value;
+
+                if (!professionalTitle.trim()) {
+                    showMessage("Professional title is required for service providers", "error");
+                    return;
+                }
+                if (!experience) {
+                    showMessage("Please select your experience level", "error");
+                    return;
+                }
+                if (!phoneNumber.trim()) {
+                    showMessage("Phone number is required for service providers", "error");
+                    return;
+                }
+            }
+
+            // Prepare registration data
+            const registrationData = { 
+                email: email.trim().toLowerCase(),
+                password: password,
+                role: role
+            };
+
+            // Add worker-specific data
+            if (role === 'WORKER') {
+                registrationData.professionalTitle = document.getElementById('professionalTitle').value.trim();
+                registrationData.experience = document.getElementById('experience').value;
+                registrationData.phoneNumber = document.getElementById('phoneNumber').value.trim();
+                registrationData.serviceAreas = document.getElementById('serviceAreas').value.trim();
+                registrationData.hourlyRate = document.getElementById('hourlyRate').value ? 
+                    parseFloat(document.getElementById('hourlyRate').value) : 0;
+                registrationData.skills = document.getElementById('skills').value.trim();
+                registrationData.bio = document.getElementById('bio').value.trim();
+            }
+
+            setLoadingState(true);
+
+            console.log("Sending registration data:", registrationData);
+
+            try {
+                // SINGLE API CALL for both user and worker registration
+                const response = await fetch("http://localhost:8081/api/register", {
+                    method: "POST",
+                    headers: { 
+                        "Content-Type": "application/json",
+                        "Accept": "application/json"
+                    },
+                    body: JSON.stringify(registrationData)
+                });
+
+                console.log("Registration response status:", response.status);
+                
+                let data;
+                try {
+                    data = await response.json();
+                } catch (e) {
+                    throw new Error('Invalid response from server');
+                }
+
+                console.log("Registration response:", data);
+
+                if (!response.ok || data.status !== "SUCCESS") {
+                    throw new Error(data.message || "Registration failed");
+                }
+
+                // Registration successful
+                showMessage("Registration successful! Redirecting...", "success");
+                
+                // Clear form
+                document.getElementById('registerForm').reset();
+                toggleWorkerFields(''); // Reset role display
+                
+                // Redirect based on role
+                setTimeout(() => {
+                    if (role === 'WORKER') {
+                        // Redirect to worker dashboard
+                        window.location.href = "worker-dashboard.html?email=" + encodeURIComponent(email);
+                    } else {
+                        // Redirect to customer home page
+                        window.location.href = "index.html?email=" + encodeURIComponent(email);
+                    }
+                }, 2000);
+
+            } catch (error) {
+                console.error('Registration Error:', error);
+                
+                // Provide user-friendly error messages
+                let errorMessage = "Registration failed. Please try again.";
+                
+                if (error.message.includes("already registered") || error.message.includes("already exists")) {
+                    errorMessage = "This email is already registered. Please use a different email or try logging in.";
+                } else if (error.message.includes("Professional title")) {
+                    errorMessage = "Professional title is required for service providers.";
+                } else if (error.message.includes("Phone number")) {
+                    errorMessage = "Phone number is required for service providers.";
+                } else if (error.message.includes("Email")) {
+                    errorMessage = "Please enter a valid email address.";
+                } else if (error.message.includes("Password")) {
+                    errorMessage = "Please check your password requirements.";
+                } else if (error.message.includes("Role")) {
+                    errorMessage = "Please select a role (Customer or Service Provider).";
+                } else {
+                    errorMessage = error.message;
+                }
+                
+                showMessage(errorMessage, "error");
+            } finally {
+                setLoadingState(false);
+            }
+        }
+
+        // Password strength indicator
+        function checkPasswordStrength(password) {
+            const strengthBar = document.getElementById('passwordStrength');
+            let strength = 0;
+            
+            if (password.length >= 6) strength += 1;
+            if (password.match(/[a-z]+/)) strength += 1;
+            if (password.match(/[A-Z]+/)) strength += 1;
+            if (password.match(/[0-9]+/)) strength += 1;
+            if (password.match(/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/)) strength += 1;
+            
+            // Update strength bar
+            strengthBar.className = 'password-strength-bar';
+            if (password.length === 0) {
+                strengthBar.style.width = '0%';
+            } else if (strength <= 2) {
+                strengthBar.className += ' strength-weak';
+            } else if (strength <= 4) {
+                strengthBar.className += ' strength-medium';
+            } else {
+                strengthBar.className += ' strength-strong';
+            }
+        }
+
+        // Toggle worker fields based on role selection
+        function toggleWorkerFields(role) {
+            const workerFields = document.getElementById('workerFields');
+            const userInfo = document.getElementById('userInfo');
+            const workerInfo = document.getElementById('workerInfo');
+            
+            // Get all required fields in worker section
+            const workerRequiredFields = workerFields.querySelectorAll('[id]');
+            
+            if (role === 'WORKER') {
+                workerFields.style.display = 'block';
+                userInfo.style.display = 'none';
+                workerInfo.style.display = 'block';
+                
+                // Make worker fields required
+                workerRequiredFields.forEach(field => {
+                    const input = document.getElementById(field.id);
+                    if (input && (field.id === 'professionalTitle' || field.id === 'experience' || field.id === 'phoneNumber')) {
+                        input.required = true;
+                    }
+                });
+            } else if (role === 'USER') {
+                workerFields.style.display = 'none';
+                userInfo.style.display = 'block';
+                workerInfo.style.display = 'none';
+                
+                // Remove required from worker fields
+                workerRequiredFields.forEach(field => {
+                    const input = document.getElementById(field.id);
+                    if (input) input.required = false;
+                });
+            } else {
+                workerFields.style.display = 'none';
+                userInfo.style.display = 'none';
+                workerInfo.style.display = 'none';
+                
+                // Remove required from worker fields
+                workerRequiredFields.forEach(field => {
+                    const input = document.getElementById(field.id);
+                    if (input) input.required = false;
+                });
+            }
+        }
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add event listeners
+            document.getElementById('registerForm').addEventListener('submit', registerUser);
+            
+            // Role selection handler
+            document.getElementById('regRole').addEventListener('change', function() {
+                toggleWorkerFields(this.value);
+            });
+            
+            // Password strength indicator
+            document.getElementById('regPassword').addEventListener('input', function() {
+                checkPasswordStrength(this.value);
+            });
+
+            // Real-time password confirmation check
+            document.getElementById('confirmPassword').addEventListener('input', function() {
+                const password = document.getElementById('regPassword').value;
+                const confirmPassword = this.value;
+                
+                if (confirmPassword && password !== confirmPassword) {
+                    this.style.borderColor = '#e74c3c';
+                } else if (confirmPassword) {
+                    this.style.borderColor = '#2ecc71';
+                } else {
+                    this.style.borderColor = '#ddd';
+                }
+            });
+
+            // Initialize role display
+            toggleWorkerFields(document.getElementById('regRole').value);
+
+            // Check for success message from URL parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            const message = urlParams.get('message');
+            if (message) {
+                showMessage(message, 'success');
+            }
+        });
+    </script>
+</body>
+</html>

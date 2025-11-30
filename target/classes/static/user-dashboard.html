@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard - ServiceNest</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <h1 class="logo">🏠 ServiceNest</h1>
+            <div class="nav-links">
+                <a href="user-dashboard.html" class="nav-link active">Dashboard</a>
+                <a href="services.html" class="nav-link">Book Service</a>
+                <a href="my-bookings.html" class="nav-link">My Bookings</a>
+                <a href="profile.html" class="nav-link">Profile</a>
+                <a href="#" onclick="logout()" class="nav-link">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        <div class="dashboard-header">
+            <div class="welcome-section">
+                <h1>Welcome back, <span id="userName">User</span>! 👋</h1>
+                <p>Here's what's happening with your services today</p>
+            </div>
+            <div class="quick-actions">
+                <button class="btn primary" onclick="location.href='services.html'">Book New Service</button>
+            </div>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="stats-grid dashboard-stats">
+            <div class="stat-card">
+                <div class="stat-icon">📅</div>
+                <div class="stat-info">
+                    <h3 id="totalBookings">0</h3>
+                    <p>Total Bookings</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">⏳</div>
+                <div class="stat-info">
+                    <h3 id="pendingBookings">0</h3>
+                    <p>Pending</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">✅</div>
+                <div class="stat-info">
+                    <h3 id="completedBookings">0</h3>
+                    <p>Completed</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">⭐</div>
+                <div class="stat-info">
+                    <h3 id="userRating">4.8</h3>
+                    <p>Your Rating</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Bookings -->
+        <div class="dashboard-section">
+            <div class="section-header">
+                <h2>Recent Bookings</h2>
+                <a href="my-bookings.html" class="view-all">View All</a>
+            </div>
+            <div class="bookings-list" id="recentBookings">
+                <!-- Bookings will be loaded here -->
+                <div class="empty-state">
+                    <p>No recent bookings found</p>
+                    <a href="services.html" class="btn primary">Book Your First Service</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Services -->
+        <div class="dashboard-section">
+            <h2>Quick Book Services</h2>
+            <div class="quick-services-grid">
+                <div class="quick-service-card" onclick="quickBook('Plumbing')">
+                    <div class="service-icon">🔧</div>
+                    <span>Plumbing</span>
+                </div>
+                <div class="quick-service-card" onclick="quickBook('Electrical')">
+                    <div class="service-icon">⚡</div>
+                    <span>Electrical</span>
+                </div>
+                <div class="quick-service-card" onclick="quickBook('Cleaning')">
+                    <div class="service-icon">🧹</div>
+                    <span>Cleaning</span>
+                </div>
+                <div class="quick-service-card" onclick="quickBook('AC Service')">
+                    <div class="service-icon">❄️</div>
+                    <span>AC Service</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 ServiceNest. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="user-dashboard.js"></script>
+</body>
+</html>

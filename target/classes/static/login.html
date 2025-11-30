@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ServiceNest - Login</title>
+    <style>
+        /* Base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Navigation */
+        .navbar {
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: #555;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: #3498db;
+        }
+
+        .register-btn {
+            background-color: #3498db;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        .register-btn:hover {
+            background-color: #2980b9;
+        }
+
+        /* Auth Container */
+        .auth-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .auth-box {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 450px;
+        }
+
+        .auth-box h2 {
+            text-align: center;
+            margin-bottom: 10px;
+            color: #2c3e50;
+            font-size: 2rem;
+        }
+
+        .auth-subtitle {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #666;
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #2c3e50;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+        }
+
+        /* CAPTCHA Styles */
+        .captcha-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        #captchaText {
+            flex: 1;
+            background: #f8f9fa;
+            padding: 10px 15px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 1.2rem;
+            font-weight: bold;
+            letter-spacing: 3px;
+            text-align: center;
+            border: 1px dashed #ddd;
+            user-select: none;
+        }
+
+        .captcha-refresh {
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .captcha-refresh:hover {
+            background: #2980b9;
+        }
+
+        /* Button Styles */
+        .auth-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+
+        .auth-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+        }
+
+        .auth-btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* Message Styles */
+        .message {
+            padding: 12px;
+            border-radius: 6px;
+            margin: 20px 0;
+            text-align: center;
+            display: none;
+        }
+
+        .message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            display: block;
+        }
+
+        .message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            display: block;
+        }
+
+        /* Auth Link */
+        .auth-link {
+            text-align: center;
+            margin-top: 25px;
+            color: #666;
+        }
+
+        .auth-link a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .auth-link a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .auth-box {
+                padding: 30px 20px;
+                margin: 20px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .auth-container {
+                padding: 20px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <h1 class="logo">🏠 ServiceNest</h1>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="login.html" class="nav-link active">Login</a>
+                <a href="register.html" class="nav-link register-btn">Register</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="auth-container">
+        <div class="auth-box">
+            <h2>Welcome Back</h2>
+            <p class="auth-subtitle">Sign in to your account</p>
+
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="role">I am a</label>
+                    <select id="role" required>
+                        <option value="">Select Role</option>
+                        <option value="USER">User</option>
+                        <option value="WORKER">Worker</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" placeholder="Enter your email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="Enter your password" required>
+                </div>
+
+                <div class="form-group">
+                    <label>CAPTCHA Verification</label>
+                    <div class="captcha-box">
+                        <span id="captchaText"></span>
+                        <button type="button" class="captcha-refresh">↻</button>
+                    </div>
+                    <input type="text" id="captchaInput" placeholder="Enter CAPTCHA" required>
+                </div>
+
+                <button type="submit" class="auth-btn">Sign In</button>
+            </form>
+
+            <div id="message" class="message"></div>
+
+            <p class="auth-link">
+                Don't have an account? 
+                <a href="register.html">Create one here</a>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        let captchaValue = "";
+
+        function generateCaptcha() {
+            const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+            captchaValue = "";
+            for (let i = 0; i < 6; i++) {
+                captchaValue += chars[Math.floor(Math.random() * chars.length)];
+            }
+            document.getElementById("captchaText").innerText = captchaValue;
+        }
+
+        function showMessage(text, type) {
+            const messageDiv = document.getElementById("message");
+            messageDiv.innerHTML = text;
+            messageDiv.className = `message ${type}`;
+        }
+
+        function loginUser(event) {
+            event.preventDefault();
+            
+            const role = document.getElementById("role").value;
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+            const captchaInput = document.getElementById("captchaInput").value;
+            const messageDiv = document.getElementById("message");
+
+            // Reset message
+            messageDiv.innerHTML = '';
+            messageDiv.className = 'message';
+
+            // Validation
+            if (!role || !email || !password || !captchaInput) {
+                showMessage("All fields are required", "error");
+                return;
+            }
+
+            if (captchaInput !== captchaValue) {
+                showMessage("Invalid CAPTCHA", "error");
+                generateCaptcha();
+                return;
+            }
+
+            // Show loading state
+            const submitBtn = document.querySelector('.auth-btn');
+            submitBtn.textContent = 'Signing In...';
+            submitBtn.disabled = true;
+
+            console.log("Sending login data:", { email, password, role });
+
+            fetch("http://localhost:8081/api/login", {
+                method: "POST",
+                headers: { 
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
+                body: JSON.stringify({ 
+                    email: email,
+                    password: password,
+                    role: role
+                })
+            })
+            .then(response => {
+                console.log("Response status:", response.status);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log("Response data:", data);
+                if (data.status === "SUCCESS") {
+                    showMessage("Login successful! Redirecting...", "success");
+                    
+                    // Store user info in localStorage
+                    localStorage.setItem('userEmail', email);
+                    localStorage.setItem('userRole', data.role);
+                    
+                    // Redirect based on role
+                    setTimeout(() => {
+                        if (data.role === "USER") {
+                            window.location.href = "user-dashboard.html";
+                        } else {
+                            window.location.href = "worker-dashboard.html";
+                        }
+                    }, 1500);
+                } else {
+                    showMessage(data.message || "Login failed", "error");
+                    generateCaptcha();
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showMessage("Server error. Please try again. Error: " + error.message, "error");
+            })
+            .finally(() => {
+                submitBtn.textContent = 'Sign In';
+                submitBtn.disabled = false;
+            });
+        }
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            generateCaptcha();
+            
+            // Check if user is already logged in
+            const userRole = localStorage.getItem('userRole');
+            if (userRole) {
+                if (userRole === 'USER') {
+                    window.location.href = 'user-dashboard.html';
+                } else if (userRole === 'WORKER') {
+                    window.location.href = 'worker-dashboard.html';
+                }
+            }
+
+            // Add event listeners
+            document.getElementById('loginForm').addEventListener('submit', loginUser);
+            document.querySelector('.captcha-refresh').addEventListener('click', generateCaptcha);
+        });
+    </script>
+</body>
+</html>

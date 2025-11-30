@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Services - ServiceNest</title>
+    <style>
+        /* Base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navbar styles */
+        .navbar {
+            background-color: #fff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: #555;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: #3498db;
+        }
+
+        .register-btn {
+            background-color: #3498db;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 4px;
+        }
+
+        /* Page header */
+        .page-header {
+            background: linear-gradient(135deg, #3498db, #2c3e50);
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        /* Services filter */
+        .services-filter {
+            display: flex;
+            gap: 10px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 10px 20px;
+            background-color: #f1f1f1;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .filter-btn:hover {
+            background-color: #e0e0e0;
+        }
+
+        .filter-btn.active {
+            background-color: #3498db;
+            color: white;
+        }
+
+        /* Search and filter section */
+        .search-filter-section {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+        }
+
+        .search-box {
+            display: flex;
+            margin-bottom: 20px;
+        }
+
+        .search-box input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px 0 0 4px;
+            font-size: 1rem;
+        }
+
+        .search-btn {
+            padding: 12px 20px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+        }
+
+        .advanced-filters {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .filter-group label {
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .filter-group select {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        /* Services grid */
+        .services-grid-detailed {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        .service-detail-card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            padding: 25px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .service-detail-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+        }
+
+        .service-header {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .service-icon {
+            font-size: 2rem;
+            margin-right: 15px;
+        }
+
+        .service-title {
+            flex: 1;
+        }
+
+        .service-title h3 {
+            margin-bottom: 5px;
+            color: #2c3e50;
+        }
+
+        .service-rating {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .stars {
+            display: flex;
+            align-items: center;
+        }
+
+        .rating-value {
+            font-weight: bold;
+            margin-left: 5px;
+        }
+
+        .reviews-count {
+            color: #777;
+            font-size: 0.9rem;
+        }
+
+        .price-tag {
+            background-color: #e8f4fc;
+            color: #3498db;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        .service-providers {
+            margin: 15px 0;
+        }
+
+        .providers-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .provider-card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+        }
+
+        .provider-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .provider-avatar {
+            font-size: 1.5rem;
+        }
+
+        .provider-details h4 {
+            margin-bottom: 5px;
+        }
+
+        .provider-rating {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.9rem;
+        }
+
+        .provider-specialty {
+            color: #666;
+            font-size: 0.85rem;
+            margin-top: 3px;
+        }
+
+        .service-features {
+            margin: 15px 0;
+            padding-left: 20px;
+        }
+
+        .service-features li {
+            margin-bottom: 5px;
+        }
+
+        .service-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .btn.primary {
+            background-color: #3498db;
+            color: white;
+        }
+
+        .btn.primary:hover {
+            background-color: #2980b9;
+        }
+
+        .btn.outline {
+            background-color: transparent;
+            border: 1px solid #3498db;
+            color: #3498db;
+        }
+
+        .btn.outline:hover {
+            background-color: #e8f4fc;
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+        }
+
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        /* Footer styles */
+        .footer {
+            background-color: #2c3e50;
+            color: white;
+            padding: 50px 0 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-section h3, .footer-section h4 {
+            margin-bottom: 15px;
+        }
+
+        .footer-section a {
+            display: block;
+            color: #ddd;
+            text-decoration: none;
+            margin-bottom: 8px;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: #3498db;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #3a506b;
+            color: #aaa;
+        }
+
+        /* Toast notification */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #2ecc71;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 4px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 1001;
+            display: none;
+        }
+
+        /* Hidden class for filtering */
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <h1 class="logo">🏠 ServiceNest</h1>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="services.html" class="nav-link active">Services</a>
+                <a href="about.html" class="nav-link">About</a>
+                <a href="contact.html" class="nav-link">Contact</a>
+                <a href="login.html" class="nav-link">Login</a>
+                <a href="register.html" class="nav-link register-btn">Join Now</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="page-header">
+        <div class="container">
+            <h1>Our Services</h1>
+            <p>Choose from a wide range of professional home services</p>
+        </div>
+    </div>
+
+    <div class="services-container">
+        <div class="container">
+            <div class="services-filter">
+                <button class="filter-btn active" data-category="all">All Services</button>
+                <button class="filter-btn" data-category="repair">Repairs</button>
+                <button class="filter-btn" data-category="cleaning">Cleaning</button>
+                <button class="filter-btn" data-category="installation">Installation</button>
+                <button class="filter-btn" data-category="maintenance">Maintenance</button>
+            </div>
+
+            <!-- Search and Filter Section -->
+            <div class="search-filter-section">
+                <div class="search-box">
+                    <input type="text" id="serviceSearch" placeholder="Search services...">
+                    <button class="search-btn">🔍</button>
+                </div>
+                
+                <div class="advanced-filters">
+                    <div class="filter-group">
+                        <label>Sort by:</label>
+                        <select id="sortBy">
+                            <option value="popularity">Popularity</option>
+                            <option value="rating">Highest Rating</option>
+                            <option value="price-low">Price: Low to High</option>
+                            <option value="price-high">Price: High to Low</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label>Rating:</label>
+                        <select id="ratingFilter">
+                            <option value="0">All Ratings</option>
+                            <option value="4">4+ Stars</option>
+                            <option value="4.5">4.5+ Stars</option>
+                            <option value="5">5 Stars Only</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label>Price Range:</label>
+                        <select id="priceFilter">
+                            <option value="all">All Prices</option>
+                            <option value="0-500">Under ₹500</option>
+                            <option value="500-1000">₹500 - ₹1000</option>
+                            <option value="1000-2000">₹1000 - ₹2000</option>
+                            <option value="2000+">₹2000+</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="services-grid-detailed">
+                <!-- Plumbing Services -->
+                <div class="service-detail-card" data-category="repair" data-rating="4.8" data-reviews="127" data-price="499">
+                    <div class="service-header">
+                        <div class="service-icon">🔧</div>
+                        <div class="service-title">
+                            <h3>Plumbing Services</h3>
+                            <div class="service-rating">
+                                <div class="stars">
+                                    <span class="star filled">⭐</span>
+                                    <span class="star filled">⭐</span>
+                                    <span class="star filled">⭐</span>
+                                    <span class="star filled">⭐</span>
+                                    <span class="star half">⭐</span>
+                                    <span class="rating-value">4.8</span>
+                                    <span class="reviews-count">(127 reviews)</span>
+                                </div>
+                            </div>
+                        </div>
+                        <span class="price-tag">₹499+</span>
+                    </div>
+                    
+                    <div class="service-providers">
+                        <div class="providers-list">
+                            <div class="provider-card" data-provider-id="1" data-rating="4.9" data-completed-jobs="89">
+                                <div class="provider-info">
+                                    <div class="provider-avatar">👨‍🔧</div>
+                                    <div class="provider-details">
+                                        <h4>Raj Kumar</h4>
+                                        <div class="provider-rating">
+                                            <span class="stars">⭐⭐⭐⭐⭐</span>
+                                            <span class="rating">4.9</span>
+                                            <span class="jobs">(89 jobs)</span>
+                                        </div>
+                                        <p class="provider-specialty">Expert in pipe repairs & installations</p>
+                                    </div>
+                                </div>
+                                <button class="btn primary select-provider" data-provider="Raj Kumar">Select</button>
+                            </div>
+                            
+                            <div class="provider-card" data-provider-id="2" data-rating="4.7" data-completed-jobs="64">
+                                <div class="provider-info">
+                                    <div class="provider-avatar">👷</div>
+                                    <div class="provider-details">
+                                        <h4>Sunil Mehta</h4>
+                                        <div class="provider-rating">
+                                            <span class="stars">⭐⭐⭐⭐⭐</span>
+                                            <span class="rating">4.7</span>
+                                            <span class="jobs">(64 jobs)</span>
+                                        </div>
+                                        <p class="provider-specialty">Specialist in bathroom fittings</p>
+                                    </div>
+                                </div>
+                                <button class="btn primary select-provider" data-provider="Sunil Mehta">Select</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <p>Professional plumbing solutions for your home and office</p>
+                    <ul class="service-features">
+                        <li>✅ Leakage repair</li>
+                        <li>✅ Pipe installation</li>
+                        <li>✅ Tap & faucet repair</li>
+                        <li>✅ Water heater service</li>
+                    </ul>
+                    <div class="service-actions">
+                        <button class="btn primary book-btn" data-service="Plumbing">Book Now</button>
+                        <button class="btn outline view-reviews-btn" data-service="Plumbing">View Reviews</button>
+                    </div>
+                </div>
+
+                <!-- Electrical Services -->
+                <div class="service-detail-card" data-category="repair installation" data-rating="4.6" data-reviews="98" data-price="399">
+                    <div class="service-header">
+                        <div class="service-icon">⚡</div>
+                        <div class="service-title">
+                            <h3>Electrical Work</h3>
+                            <div class="service-rating">
+                                <div class="stars">
+                                    <span class="star filled">⭐</span>
+                                    <span class="star filled">⭐</span>
+                                    <span class="star filled">⭐</span>
+                                    <span class="star filled">⭐</span>
+                                    <span class="star">⭐</span>
+                                    <span class="rating-value">4.6</span>
+                                    <span class="reviews-count">(98 reviews)</span>
+                                </div>
+                            </div>
+                        </div>
+                        <span class="price-tag">₹399+</span>
+                    </div>
+                    
+                    <div class="service-providers">
+                        <div class="providers-list">
+                            <div class="provider-card" data-provider-id="3" data-rating="4.8" data-completed-jobs="76">
+                                <div class="provider-info">
+                                    <div class="provider-avatar">👨‍💼</div>
+                                    <div class="provider-details">
+                                        <h4>Anil Sharma</h4>
+                                        <div class="provider-rating">
+                                            <span class="stars">⭐⭐⭐⭐⭐</span>
+                                            <span class="rating">4.8</span>
+                                            <span class="jobs">(76 jobs)</span>
+                                        </div>
+                                        <p class="provider-specialty">Certified electrician with 8+ years experience</p>
+                                    </div>
+                                </div>
+                                <button class="btn primary select-provider" data-provider="Anil Sharma">Select</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <p>Safe and reliable electrical solutions for your home</p>
+                    <ul class="service-features">
+                        <li>✅ Wiring & switches</li>
+                        <li>✅ MCB repair</li>
+                        <li>✅ Appliance installation</li>
+                        <li>✅ Light fitting</li>
+                    </ul>
+                    <div class="service-actions">
+                        <button class="btn primary book-btn" data-service="Electrical">Book Now</button>
+                        <button class="btn outline view-reviews-btn" data-service="Electrical">View Reviews</button>
+                    </div>
+                </div>
+
+                <!-- Painting Services -->
+                <div class="service-detail-card" data-category="maintenance" data-rating="4.9" data-reviews="156" data-price="1999">
+                    <div class="service-header">
+                        <div class="service-icon">🎨</div>
+                        <div class="service-title">
+                            <h3>Painting Services</h3>
+                            <div class="service-rating">
+                                <div class="stars">
+                                    <span class="star filled">⭐</span>
+                                    <span class="star filled">⭐</span>
+                                    <span class="star filled">⭐</span>
+                                    <span class="star filled">⭐</span>
+                                    <span class="star filled">⭐</span>
+                                    <span class="rating-value">4.9</span>
+                                    <span class="reviews-count">(156 reviews)</span>
+                                </div>
+                            </div>
+                        </div>
+                        <span class="price-tag">₹1999+</span>
+                    </div>
+                    
+                    <div class="service-providers">
+                        <div class="providers-list">
+                            <div class="provider-card" data-provider-id="4" data-rating="4.9" data-completed-jobs="112">
+                                <div class="provider-info">
+                                    <div class="provider-avatar">👨‍🎨</div>
+                                    <div class="provider-details">
+                                        <h4>Vikram Singh</h4>
+                                        <div class="provider-rating">
+                                            <span class="stars">⭐⭐⭐⭐⭐</span>
+                                            <span class="rating">4.9</span>
+                                            <span class="jobs">(112 jobs)</span>
+                                        </div>
+                                        <p class="provider-specialty">Interior & exterior painting expert</p>
+                                    </div>
+                                </div>
+                                <button class="btn primary select-provider" data-provider="Vikram Singh">Select</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <p>Transform your space with professional painting services</p>
+                    <ul class="service-features">
+                        <li>✅ Wall painting</li>
+                        <li>✅ Texture painting</li>
+                        <li>✅ Waterproofing</li>
+                        <li>✅ Color consultation</li>
+                    </ul>
+                    <div class="service-actions">
+                        <button class="btn primary book-btn" data-service="Painting">Book Now</button>
+                        <button class="btn outline view-reviews-btn" data-service="Painting">View Reviews</button>
+                    </div>
+                </div>
+
+                <!-- Cleaning Services -->
+                <div class="service-detail-card" data-category="cleaning" data-rating="4.7" data-reviews="203" data-price="1299">
+                    <div class="service-header">
+                        <div class="service-icon">🧹</div>
+                        <div class="service-title">
+                            <h3>Deep Cleaning</h3>
+                            <div class="service-rating">
+                                <div class="stars">
+                                    <span class="star filled">⭐</span>
+                                    <span class="star filled">⭐</span>
+                                    <span class="star filled">⭐</span>
+                                    <span class="star filled">⭐</span>
+                                    <span class="star">⭐</span>
+                                    <span class="rating-value">4.7</span>
+                                    <span class="reviews-count">(203 reviews)</span>
+                                </div>
+                            </div>
+                        </div>
+                        <span class="price-tag">₹1299+</span>
+                    </div>
+                    
+                    <div class="service-providers">
+                        <div class="providers-list">
+                            <div class="provider-card" data-provider-id="5" data-rating="4.8" data-completed-jobs="145">
+                                <div class="provider-info">
+                                    <div class="provider-avatar">👩‍💼</div>
+                                    <div class="provider-details">
+                                        <h4>Priya Patel</h4>
+                                        <div class="provider-rating">
+                                            <span class="stars">⭐⭐⭐⭐⭐</span>
+                                            <span class="rating">4.8</span>
+                                            <span class="jobs">(145 jobs)</span>
+                                        </div>
+                                        <p class="provider-specialty">Professional cleaning with eco-friendly products</p>
+                                    </div>
+                                </div>
+                                <button class="btn primary select-provider" data-provider="Priya Patel">Select</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <p>Complete home cleaning solutions for a fresh and healthy environment</p>
+                    <ul class="service-features">
+                        <li>✅ Full home cleaning</li>
+                        <li>✅ Sofa & carpet cleaning</li>
+                        <li>✅ Kitchen deep clean</li>
+                        <li>✅ Bathroom sanitization</li>
+                    </ul>
+                    <div class="service-actions">
+                        <button class="btn primary book-btn" data-service="Cleaning">Book Now</button>
+                        <button class="btn outline view-reviews-btn" data-service="Cleaning">View Reviews</button>
+                    </div>
+                </div>
+
+                <!-- AC Services -->
+                <div class="service-detail-card" data-category="maintenance repair" data-rating="4.5" data-reviews="87" data-price="699">
+                    <div class="service-header">
+                        <div class="service-icon">❄️</div>
+                        <div class="service-title">
+                            <h3>AC Service & Repair</h3>
+                            <div class="service-rating">
+                                <div class="stars">
+                                    <span class="star filled">⭐</span>
+                                    <span class="star filled">⭐</span>
+                                    <span class="star filled">⭐</span>
+                                    <span class="star filled">⭐</span>
+                                    <span class="star">⭐</span>
+                                    <span class="rating-value">4.5</span>
+                                    <span class="reviews-count">(87 reviews)</span>
+                                </div>
+                            </div>
+                        </div>
+                        <span class="price-tag">₹699+</span>
+                    </div>
+                    
+                    <div class="service-providers">
+                        <div class="providers-list">
+                            <div class="provider-card" data-provider-id="6" data-rating="4.6" data-completed-jobs="93">
+                                <div class="provider-info">
+                                    <div class="provider-avatar">👨‍🔧</div>
+                                    <div class="provider-details">
+                                        <h4>Rohit Mehta</h4>
+                                        <div class="provider-rating">
+                                            <span class="stars">⭐⭐⭐⭐⭐</span>
+                                            <span class="rating">4.6</span>
+                                            <span class="jobs">(93 jobs)</span>
+                                        </div>
+                                        <p class="provider-specialty">AC installation and maintenance expert</p>
+                                    </div>
+                                </div>
+                                <button class="btn primary select-provider" data-provider="Rohit Mehta">Select</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <p>Keep your AC running efficiently with professional service</p>
+                    <ul class="service-features">
+                        <li>✅ AC installation</li>
+                        <li>✅ Gas charging</li>
+                        <li>✅ General service</li>
+                        <li>✅ Repair & maintenance</li>
+                    </ul>
+                    <div class="service-actions">
+                        <button class="btn primary book-btn" data-service="AC Service">Book Now</button>
+                        <button class="btn outline view-reviews-btn" data-service="AC Service">View Reviews</button>
+                    </div>
+                </div>
+
+                <!-- Carpenter Services -->
+                <div class="service-detail-card" data-category="repair installation" data-rating="4.4" data-reviews="64" data-price="599">
+                    <div class="service-header">
+                        <div class="service-icon">🪚</div>
+                        <div class="service-title">
+                            <h3>Carpenter Services</h3>
+                            <div class="service-rating">
+                                <div class="stars">
+                                    <span class="star filled">⭐</span>
+                                    <span class="star filled">⭐</span>
+                                    <span class="star filled">⭐</span>
+                                    <span class="star filled">⭐</span>
+                                    <span class="star">⭐</span>
+                                    <span class="rating-value">4.4</span>
+                                    <span class="reviews-count">(64 reviews)</span>
+                                </div>
+                            </div>
+                        </div>
+                        <span class="price-tag">₹599+</span>
+                    </div>
+                    
+                    <div class="service-providers">
+                        <div class="providers-list">
+                            <div class="provider-card" data-provider-id="7" data-rating="4.5" data-completed-jobs="78">
+                                <div class="provider-info">
+                                    <div class="provider-avatar">👷</div>
+                                    <div class="provider-details">
+                                        <h4>Sanjay Kumar</h4>
+                                        <div class="provider-rating">
+                                            <span class="stars">⭐⭐⭐⭐⭐</span>
+                                            <span class="rating">4.5</span>
+                                            <span class="jobs">(78 jobs)</span>
+                                        </div>
+                                        <p class="provider-specialty">Furniture repair and custom woodwork</p>
+                                    </div>
+                                </div>
+                                <button class="btn primary select-provider" data-provider="Sanjay Kumar">Select</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <p>Expert carpentry solutions for all your woodwork needs</p>
+                    <ul class="service-features">
+                        <li>✅ Furniture repair</li>
+                        <li>✅ Door & window fixing</li>
+                        <li>✅ Custom furniture</li>
+                        <li>✅ Polish & varnish</li>
+                    </ul>
+                    <div class="service-actions">
+                        <button class="btn primary book-btn" data-service="Carpenter">Book Now</button>
+                        <button class="btn outline view-reviews-btn" data-service="Carpenter">View Reviews</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Booking Modal -->
+    <div id="bookingModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Book Service</h2>
+            <form id="bookingForm">
+                <input type="hidden" id="selectedService">
+                <div class="form-group">
+                    <label for="customerName">Your Name</label>
+                    <input type="text" id="customerName" required>
+                </div>
+                <div class="form-group">
+                    <label for="customerPhone">Phone Number</label>
+                    <input type="tel" id="customerPhone" required>
+                </div>
+                <div class="form-group">
+                    <label for="serviceDate">Preferred Date</label>
+                    <input type="date" id="serviceDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="serviceTime">Preferred Time</label>
+                    <select id="serviceTime" required>
+                        <option value="">Select Time</option>
+                        <option value="09:00-11:00">9:00 AM - 11:00 AM</option>
+                        <option value="11:00-13:00">11:00 AM - 1:00 PM</option>
+                        <option value="14:00-16:00">2:00 PM - 4:00 PM</option>
+                        <option value="16:00-18:00">4:00 PM - 6:00 PM</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="serviceAddress">Service Address</label>
+                    <textarea id="serviceAddress" rows="3" required></textarea>
+                </div>
+                <button type="submit" class="btn primary">Confirm Booking</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast"></div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>ServiceNest</h3>
+                    <p>Your trusted partner for all home services.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Services</h4>
+                    <a href="#">Plumbing</a>
+                    <a href="#">Electrical</a>
+                    <a href="#">Painting</a>
+                    <a href="#">Cleaning</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <a href="#">Help Center</a>
+                    <a href="#">Contact Us</a>
+                    <a href="#">Privacy Policy</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 ServiceNest. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Service filtering functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const serviceCards = document.querySelectorAll('.service-detail-card');
+            const searchInput = document.getElementById('serviceSearch');
+            const sortSelect = document.getElementById('sortBy');
+            const ratingFilter = document.getElementById('ratingFilter');
+            const priceFilter = document.getElementById('priceFilter');
+            const bookButtons = document.querySelectorAll('.book-btn');
+            const modal = document.getElementById('bookingModal');
+            const closeModal = document.querySelector('.close');
+            const bookingForm = document.getElementById('bookingForm');
+            const toast = document.getElementById('toast');
+            
+            // Filter by category
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    const category = this.getAttribute('data-category');
+                    
+                    serviceCards.forEach(card => {
+                        if (category === 'all' || card.getAttribute('data-category').includes(category)) {
+                            card.classList.remove('hidden');
+                        } else {
+                            card.classList.add('hidden');
+                        }
+                    });
+                });
+            });
+            
+            // Search functionality
+            searchInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+                
+                serviceCards.forEach(card => {
+                    const serviceName = card.querySelector('h3').textContent.toLowerCase();
+                    if (serviceName.includes(searchTerm)) {
+                        card.classList.remove('hidden');
+                    } else {
+                        card.classList.add('hidden');
+                    }
+                });
+            });
+            
+            // Sort functionality
+            sortSelect.addEventListener('change', function() {
+                const sortValue = this.value;
+                const visibleCards = Array.from(serviceCards).filter(card => !card.classList.contains('hidden'));
+                
+                visibleCards.sort((a, b) => {
+                    switch(sortValue) {
+                        case 'rating':
+                            return parseFloat(b.getAttribute('data-rating')) - parseFloat(a.getAttribute('data-rating'));
+                        case 'price-low':
+                            return parseFloat(a.getAttribute('data-price')) - parseFloat(b.getAttribute('data-price'));
+                        case 'price-high':
+                            return parseFloat(b.getAttribute('data-price')) - parseFloat(a.getAttribute('data-price'));
+                        case 'popularity':
+                        default:
+                            return parseInt(b.getAttribute('data-reviews')) - parseInt(a.getAttribute('data-reviews'));
+                    }
+                });
+                
+                // Reorder the cards in the DOM
+                const grid = document.querySelector('.services-grid-detailed');
+                visibleCards.forEach(card => {
+                    grid.appendChild(card);
+                });
+            });
+            
+            // Rating filter
+            ratingFilter.addEventListener('change', function() {
+                const minRating = parseFloat(this.value);
+                
+                serviceCards.forEach(card => {
+                    const rating = parseFloat(card.getAttribute('data-rating'));
+                    if (minRating === 0 || rating >= minRating) {
+                        card.classList.remove('hidden');
+                    } else {
+                        card.classList.add('hidden');
+                    }
+                });
+            });
+            
+            // Price filter
+            priceFilter.addEventListener('change', function() {
+                const priceRange = this.value;
+                
+                serviceCards.forEach(card => {
+                    const price = parseFloat(card.getAttribute('data-price'));
+                    let shouldShow = false;
+                    
+                    switch(priceRange) {
+                        case 'all':
+                            shouldShow = true;
+                            break;
+                        case '0-500':
+                            shouldShow = price <= 500;
+                            break;
+                        case '500-1000':
+                            shouldShow = price >= 500 && price <= 1000;
+                            break;
+                        case '1000-2000':
+                            shouldShow = price >= 1000 && price <= 2000;
+                            break;
+                        case '2000+':
+                            shouldShow = price >= 2000;
+                            break;
+                    }
+                    
+                    if (shouldShow) {
+                        card.classList.remove('hidden');
+                    } else {
+                        card.classList.add('hidden');
+                    }
+                });
+            });
+            
+            // Booking modal functionality
+            bookButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const serviceName = this.getAttribute('data-service');
+                    document.getElementById('selectedService').value = serviceName;
+                    modal.style.display = 'flex';
+                });
+            });
+            
+            // Close modal
+            closeModal.addEventListener('click', function() {
+                modal.style.display = 'none';
+            });
+            
+            // Close modal when clicking outside
+            window.addEventListener('click', function(event) {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+            
+            // Form submission
+            bookingForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Collect form data
+                const bookingData = {
+                    service: document.getElementById('selectedService').value,
+                    name: document.getElementById('customerName').value,
+                    phone: document.getElementById('customerPhone').value,
+                    date: document.getElementById('serviceDate').value,
+                    time: document.getElementById('serviceTime').value,
+                    address: document.getElementById('serviceAddress').value,
+                    timestamp: new Date().toISOString()
+                };
+                
+                // In a real application, you would send this data to your backend
+                // For this demo, we'll simulate storing it in localStorage
+                storeBookingData(bookingData);
+                
+                // Show success message
+                showToast('Booking confirmed! Our team will contact you soon.');
+                
+                // Close modal and reset form
+                modal.style.display = 'none';
+                bookingForm.reset();
+            });
+            
+            // Function to store booking data (simulating database storage)
+            function storeBookingData(data) {
+                // In a real application, you would send this to your backend API
+                // For this demo, we'll store it in localStorage
+                let bookings = JSON.parse(localStorage.getItem('serviceBookings')) || [];
+                bookings.push(data);
+                localStorage.setItem('serviceBookings', JSON.stringify(bookings));
+                
+                // Log to console (for demo purposes)
+                console.log('Booking stored:', data);
+            }
+            
+            // Function to show toast notification
+            function showToast(message) {
+                toast.textContent = message;
+                toast.style.display = 'block';
+                
+                setTimeout(() => {
+                    toast.style.display = 'none';
+                }, 3000);
+            }
+            
+            // Provider selection
+            const providerButtons = document.querySelectorAll('.select-provider');
+            providerButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const providerName = this.getAttribute('data-provider');
+                    showToast(`Provider ${providerName} selected!`);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

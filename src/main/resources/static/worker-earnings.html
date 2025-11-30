@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Earnings - ServiceNest</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <h1 class="logo">🏠 ServiceNest</h1>
+            <div class="nav-links">
+                <a href="worker-dashboard.html" class="nav-link">Dashboard</a>
+                <a href="worker-jobs.html" class="nav-link">My Jobs</a>
+                <a href="worker-schedule.html" class="nav-link">Schedule</a>
+                <a href="worker-earnings.html" class="nav-link active">Earnings</a>
+                <a href="worker-profile.html" class="nav-link">Profile</a>
+                <a href="#" onclick="logout()" class="nav-link">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="page-header">
+        <div class="container">
+            <h1>My Earnings</h1>
+            <p>Track your payments and financial performance</p>
+        </div>
+    </div>
+
+    <div class="earnings-container">
+        <div class="container">
+            <!-- Earnings Summary -->
+            <div class="earnings-summary">
+                <div class="earning-card total">
+                    <div class="earning-icon">💰</div>
+                    <div class="earning-info">
+                        <h3 id="totalEarnings">₹0</h3>
+                        <p>Total Earnings</p>
+                    </div>
+                </div>
+                <div class="earning-card monthly">
+                    <div class="earning-icon">📅</div>
+                    <div class="earning-info">
+                        <h3 id="monthlyEarnings">₹0</h3>
+                        <p>This Month</p>
+                    </div>
+                </div>
+                <div class="earning-card weekly">
+                    <div class="earning-icon">📊</div>
+                    <div class="earning-info">
+                        <h3 id="weeklyEarnings">₹0</h3>
+                        <p>This Week</p>
+                    </div>
+                </div>
+                <div class="earning-card pending">
+                    <div class="earning-icon">⏳</div>
+                    <div class="earning-info">
+                        <h3 id="pendingEarnings">₹0</h3>
+                        <p>Pending Payment</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Earnings Chart and Stats -->
+            <div class="earnings-content">
+                <div class="earnings-chart">
+                    <h3>Earnings Overview</h3>
+                    <div class="chart-container">
+                        <canvas id="earningsChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="earnings-stats">
+                    <h3>Performance Stats</h3>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <span class="stat-label">Completed Jobs</span>
+                            <span class="stat-value" id="completedJobs">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Avg. Rating</span>
+                            <span class="stat-value" id="avgRating">0.0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Repeat Customers</span>
+                            <span class="stat-value" id="repeatCustomers">0%</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Response Time</span>
+                            <span class="stat-value" id="responseTime">0m</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Transactions List -->
+            <div class="transactions-section">
+                <div class="section-header">
+                    <h3>Recent Transactions</h3>
+                    <button class="btn outline" onclick="downloadReport()">Download Report</button>
+                </div>
+                <div class="transactions-list" id="transactionsList">
+                    <!-- Transactions will be loaded here -->
+                    <div class="empty-state">
+                        <p>No transactions yet</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Payment Methods -->
+            <div class="payment-methods">
+                <h3>Payment Methods</h3>
+                <div class="payment-cards">
+                    <div class="payment-card active">
+                        <div class="payment-icon">🏦</div>
+                        <div class="payment-info">
+                            <h4>Bank Transfer</h4>
+                            <p>ICICI Bank •••• 1234</p>
+                        </div>
+                        <button class="btn outline">Edit</button>
+                    </div>
+                    <div class="payment-card">
+                        <div class="payment-icon">📱</div>
+                        <div class="payment-info">
+                            <h4>UPI</h4>
+                            <p>worker@icici</p>
+                        </div>
+                        <button class="btn outline">Edit</button>
+                    </div>
+                </div>
+                <button class="btn primary">Add Payment Method</button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 ServiceNest. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Include Chart.js for charts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="worker-earnings.js"></script>
+</body>
+</html>
