@@ -6,6 +6,248 @@
     <title>My Schedule - ServiceNest</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Add necessary styles for the schedule page */
+        .page-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .schedule-container {
+            padding: 2rem 0;
+        }
+
+        .schedule-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .schedule-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .weekly-schedule {
+            background: white;
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .schedule-grid {
+            display: grid;
+            grid-template-columns: 80px repeat(7, 1fr);
+            gap: 1px;
+            background: #e0e0e0;
+            border: 1px solid #e0e0e0;
+        }
+
+        .time-column, .day-column {
+            background: white;
+        }
+
+        .day-header {
+            background: #f8f9fa;
+            padding: 0.5rem;
+            text-align: center;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .time-slot {
+            height: 60px;
+            padding: 0.25rem;
+            border-bottom: 1px solid #f0f0f0;
+            position: relative;
+        }
+
+        .time-column .time-slot {
+            text-align: right;
+            padding-right: 0.5rem;
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        .appointment {
+            background: #3498db;
+            color: white;
+            border-radius: 4px;
+            padding: 0.25rem;
+            font-size: 0.7rem;
+            margin-bottom: 2px;
+            cursor: pointer;
+        }
+
+        .appointment.status-pending { background: #f39c12; }
+        .appointment.status-accepted { background: #27ae60; }
+        .appointment.status-in-progress { background: #3498db; }
+        .appointment.status-completed { background: #95a5a6; }
+
+        .appointments-section {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .appointment-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .appointment-time {
+            min-width: 80px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .appointment-details {
+            flex: 1;
+        }
+
+        .appointment-status {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .status-pending { background: #fff3cd; color: #856404; }
+        .status-accepted { background: #d1ecf1; color: #0c5460; }
+        .status-in-progress { background: #d4edda; color: #155724; }
+        .status-completed { background: #e2e3e5; color: #383d41; }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+        }
+
+        .close {
+            float: right;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .days-selector {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .day-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .time-slots {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 2rem;
+            color: #666;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .btn.primary {
+            background: #3498db;
+            color: white;
+        }
+
+        .btn.outline {
+            background: transparent;
+            border: 1px solid #3498db;
+            color: #3498db;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .navbar {
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: #555;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: #3498db;
+        }
+
+        .footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 1rem 0;
+            margin-top: 2rem;
+        }
+    </style>
 </head>
 <body>
     <nav class="navbar">
@@ -158,6 +400,309 @@
         </div>
     </footer>
 
-    <script src="worker-schedule.js"></script>
+    <script>
+        // Worker Schedule functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Worker Schedule page loaded');
+            
+            const workerEmail = localStorage.getItem('userEmail');
+            if (!workerEmail) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            initializeSchedule();
+            loadAppointments();
+            setupAvailabilityModal();
+        });
+
+        let currentWeek = new Date();
+
+        function initializeSchedule() {
+            generateWeekSchedule();
+            setupWeekNavigation();
+        }
+
+        function generateWeekSchedule() {
+            const scheduleGrid = document.getElementById('scheduleGrid');
+            const weekStart = getWeekStart(currentWeek);
+            
+            document.getElementById('currentWeek').textContent = 
+                `Week of ${formatDate(weekStart)}`;
+            
+            // Generate time slots (7 AM to 8 PM)
+            let scheduleHTML = '<div class="time-column">';
+            for (let hour = 7; hour <= 20; hour++) {
+                scheduleHTML += `<div class="time-slot">${formatHour(hour)}</div>`;
+            }
+            scheduleHTML += '</div>';
+            
+            // Generate days columns
+            for (let i = 0; i < 7; i++) {
+                const day = new Date(weekStart);
+                day.setDate(weekStart.getDate() + i);
+                
+                scheduleHTML += `
+                    <div class="day-column" data-date="${day.toISOString().split('T')[0]}">
+                        <div class="day-header">
+                            <div class="day-name">${getDayName(day)}</div>
+                            <div class="day-date">${formatDate(day)}</div>
+                        </div>
+                        ${generateDayTimeSlots(day)}
+                    </div>
+                `;
+            }
+            
+            scheduleGrid.innerHTML = scheduleHTML;
+        }
+
+        function generateDayTimeSlots(day) {
+            let slotsHTML = '';
+            for (let hour = 7; hour <= 20; hour++) {
+                const slotId = `slot-${formatDate(day)}-${hour}`;
+                slotsHTML += `
+                    <div class="time-slot" id="${slotId}" data-time="${hour}:00">
+                        <!-- Appointments will be added here dynamically -->
+                    </div>
+                `;
+            }
+            return slotsHTML;
+        }
+
+        function setupWeekNavigation() {
+            document.getElementById('prevWeek').addEventListener('click', function() {
+                currentWeek.setDate(currentWeek.getDate() - 7);
+                generateWeekSchedule();
+                loadAppointments();
+            });
+            
+            document.getElementById('nextWeek').addEventListener('click', function() {
+                currentWeek.setDate(currentWeek.getDate() + 7);
+                generateWeekSchedule();
+                loadAppointments();
+            });
+        }
+
+        function loadAppointments() {
+            const workerEmail = localStorage.getItem('userEmail');
+            
+            // Mock data for demonstration - replace with actual API call
+            const mockAppointments = [
+                {
+                    id: 1,
+                    serviceType: 'Plumbing Repair',
+                    customerName: 'John Doe',
+                    customerPhone: '+91 9876543210',
+                    serviceDate: new Date().toISOString().split('T')[0],
+                    serviceTime: '10:00-11:00',
+                    serviceAddress: '123 Main St, Chennai',
+                    status: 'accepted'
+                },
+                {
+                    id: 2,
+                    serviceType: 'Electrical Work',
+                    customerName: 'Jane Smith',
+                    customerPhone: '+91 9876543211',
+                    serviceDate: new Date(Date.now() + 86400000).toISOString().split('T')[0],
+                    serviceTime: '14:00-15:30',
+                    serviceAddress: '456 Oak St, Chennai',
+                    status: 'accepted'
+                }
+            ];
+            
+            displayAppointments(mockAppointments);
+            displayTodayAppointments(mockAppointments);
+            displayUpcomingAppointments(mockAppointments);
+            
+            // Uncomment for real API call:
+            /*
+            fetch(`http://localhost:8081/api/bookings/worker/${workerEmail}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'SUCCESS') {
+                        const appointments = data.bookings || [];
+                        displayAppointments(appointments);
+                        displayTodayAppointments(appointments);
+                        displayUpcomingAppointments(appointments);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading appointments:', error);
+                });
+            */
+        }
+
+        function displayAppointments(appointments) {
+            // Clear existing appointments
+            document.querySelectorAll('.appointment').forEach(el => el.remove());
+            
+            appointments.forEach(appointment => {
+                if (appointment.status === 'accepted' || appointment.status === 'in-progress') {
+                    addAppointmentToSchedule(appointment);
+                }
+            });
+        }
+
+        function addAppointmentToSchedule(appointment) {
+            const date = appointment.serviceDate;
+            const time = appointment.serviceTime.split('-')[0]; // Get start time
+            const hour = parseInt(time.split(':')[0]);
+            
+            const slotId = `slot-${date}-${hour}`;
+            const slot = document.getElementById(slotId);
+            
+            if (slot) {
+                const appointmentEl = document.createElement('div');
+                appointmentEl.className = `appointment status-${appointment.status}`;
+                appointmentEl.innerHTML = `
+                    <div class="appointment-content">
+                        <strong>${appointment.serviceType}</strong>
+                        <small>${appointment.customerName}</small>
+                        <small>${appointment.serviceTime}</small>
+                    </div>
+                `;
+                appointmentEl.addEventListener('click', () => viewAppointmentDetails(appointment));
+                slot.appendChild(appointmentEl);
+            }
+        }
+
+        function displayTodayAppointments(appointments) {
+            const today = new Date().toISOString().split('T')[0];
+            const todayAppointments = appointments.filter(apt => 
+                apt.serviceDate === today && 
+                (apt.status === 'accepted' || apt.status === 'in-progress')
+            );
+            
+            const container = document.getElementById('todayAppointments');
+            displayAppointmentList(todayAppointments, container);
+        }
+
+        function displayUpcomingAppointments(appointments) {
+            const today = new Date();
+            const upcomingAppointments = appointments.filter(apt => {
+                const aptDate = new Date(apt.serviceDate);
+                return aptDate > today && 
+                       (apt.status === 'accepted' || apt.status === 'in-progress');
+            }).sort((a, b) => new Date(a.serviceDate) - new Date(b.serviceDate));
+            
+            const container = document.getElementById('upcomingAppointments');
+            displayAppointmentList(upcomingAppointments, container);
+        }
+
+        function displayAppointmentList(appointments, container) {
+            if (appointments.length === 0) {
+                container.innerHTML = '<div class="empty-state"><p>No appointments</p></div>';
+                return;
+            }
+            
+            container.innerHTML = appointments.map(apt => `
+                <div class="appointment-item">
+                    <div class="appointment-time">${apt.serviceTime}</div>
+                    <div class="appointment-details">
+                        <h4>${apt.serviceType}</h4>
+                        <p>${apt.customerName} • ${apt.customerPhone}</p>
+                        <p class="appointment-address">${apt.serviceAddress}</p>
+                    </div>
+                    <div class="appointment-status status-${apt.status}">${formatStatus(apt.status)}</div>
+                </div>
+            `).join('');
+        }
+
+        function viewAppointmentDetails(appointment) {
+            alert(`Appointment Details:\n
+Service: ${appointment.serviceType}
+Customer: ${appointment.customerName}
+Phone: ${appointment.customerPhone}
+Date: ${formatDate(appointment.serviceDate)}
+Time: ${appointment.serviceTime}
+Address: ${appointment.serviceAddress}
+Status: ${formatStatus(appointment.status)}`);
+        }
+
+        function setupAvailabilityModal() {
+            const modal = document.getElementById('availabilityModal');
+            const openBtn = document.getElementById('setAvailability');
+            const closeBtn = modal.querySelector('.close');
+            const form = document.getElementById('availabilityForm');
+            
+            openBtn.addEventListener('click', function() {
+                modal.style.display = 'block';
+            });
+            
+            closeBtn.addEventListener('click', function() {
+                modal.style.display = 'none';
+            });
+            
+            window.addEventListener('click', function(event) {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+            
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                saveAvailability();
+            });
+        }
+
+        function saveAvailability() {
+            const formData = new FormData(document.getElementById('availabilityForm'));
+            const availability = {
+                days: formData.getAll('days'),
+                startTime: formData.get('startTime'),
+                endTime: formData.get('endTime'),
+                breakStart: formData.get('breakStart'),
+                breakEnd: formData.get('breakEnd')
+            };
+            
+            // Save to localStorage (in real app, send to backend)
+            localStorage.setItem('workerAvailability', JSON.stringify(availability));
+            
+            alert('Availability saved successfully!');
+            document.getElementById('availabilityModal').style.display = 'none';
+        }
+
+        // Utility functions
+        function getWeekStart(date) {
+            const day = date.getDay();
+            const diff = date.getDate() - day + (day === 0 ? -6 : 1);
+            return new Date(date.setDate(diff));
+        }
+
+        function formatDate(date) {
+            if (typeof date === 'string') {
+                date = new Date(date);
+            }
+            return date.toLocaleDateString('en-IN', { 
+                day: 'numeric', 
+                month: 'short',
+                year: 'numeric'
+            });
+        }
+
+        function formatHour(hour) {
+            return hour <= 12 ? `${hour} AM` : `${hour - 12} PM`;
+        }
+
+        function getDayName(date) {
+            return date.toLocaleDateString('en-IN', { weekday: 'short' });
+        }
+
+        function formatStatus(status) {
+            const statusMap = {
+                'pending': 'Pending',
+                'accepted': 'Accepted',
+                'in-progress': 'In Progress',
+                'completed': 'Completed'
+            };
+            return statusMap[status] || status;
+        }
+
+        function logout() {
+            localStorage.removeItem('userEmail');
+            localStorage.removeItem('userRole');
+            window.location.href = 'index.html';
+        }
+    </script>
 </body>
 </html>
