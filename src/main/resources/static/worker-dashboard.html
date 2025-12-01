@@ -503,224 +503,224 @@
     </footer>
 
     <script>
-        // Worker Dashboard functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            loadWorkerDashboard();
-        });
+    // Worker Dashboard functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        loadWorkerDashboard();
+    });
 
-        function loadWorkerDashboard() {
-            // Load worker info
-            const workerEmail = localStorage.getItem('userEmail');
-            if (workerEmail) {
-                document.getElementById('workerName').textContent = workerEmail.split('@')[0];
-                
-                // Load worker profile for rating
-                fetch(`http://localhost:8081/api/worker/profile/${workerEmail}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.status === "SUCCESS" && data.profile) {
-                            document.getElementById('workerRating').textContent = data.profile.rating || '4.9';
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error loading worker profile:', error);
-                    });
-                
-                // Load assigned jobs
-                fetch(`http://localhost:8081/api/bookings/worker/${workerEmail}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.status === "SUCCESS") {
-                            const workerBookings = data.bookings || [];
-                            
-                            // Update stats
-                            document.getElementById('totalJobs').textContent = workerBookings.length;
-                            document.getElementById('pendingJobs').textContent = 
-                                workerBookings.filter(b => b.status === 'pending' || b.status === 'accepted').length;
-                            
-                            // Calculate earnings
-                            const completedJobs = workerBookings.filter(b => b.status === 'completed');
-                            const totalEarnings = completedJobs.reduce((sum, job) => sum + (job.price || 500), 0);
-                            document.getElementById('totalEarnings').textContent = `₹${totalEarnings}`;
-                            
-                            // Load today's schedule
-                            loadTodaySchedule(workerBookings);
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error loading worker bookings:', error);
-                        // Fallback to localStorage if API fails
-                        loadFallbackData();
-                    });
-                
-                // Load pending job requests
-                fetch('http://localhost:8081/api/bookings/pending')
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.status === "SUCCESS") {
-                            loadJobRequests(data.bookings || []);
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error loading pending bookings:', error);
-                    });
-            }
-        }
-
-        function loadFallbackData() {
-            // Fallback data for demonstration
-            const fallbackBookings = [
-                {
-                    id: 1,
-                    service: "Plumbing Repair",
-                    name: "Rajesh Kumar",
-                    phone: "+91 9876543210",
-                    date: new Date().toISOString().split('T')[0],
-                    time: "10:00 AM",
-                    status: "accepted",
-                    price: 500
-                },
-                {
-                    id: 2,
-                    service: "Electrical Work",
-                    name: "Priya Sharma",
-                    phone: "+91 9876543211",
-                    date: new Date().toISOString().split('T')[0],
-                    time: "2:00 PM",
-                    status: "pending",
-                    price: 400
-                }
-            ];
-
-            document.getElementById('totalJobs').textContent = fallbackBookings.length;
-            document.getElementById('pendingJobs').textContent = 
-                fallbackBookings.filter(b => b.status === 'pending' || b.status === 'accepted').length;
-            document.getElementById('totalEarnings').textContent = '₹900';
+    function loadWorkerDashboard() {
+        // Load worker info
+        const workerEmail = localStorage.getItem('userEmail');
+        if (workerEmail) {
+            document.getElementById('workerName').textContent = workerEmail.split('@')[0];
             
-            loadTodaySchedule(fallbackBookings);
-            loadJobRequests(fallbackBookings.filter(b => b.status === 'pending'));
-        }
-
-        function loadTodaySchedule(bookings) {
-            const container = document.getElementById('todaySchedule');
-            const today = new Date().toISOString().split('T')[0];
-            
-            const todayJobs = bookings.filter(booking => booking.date === today && 
-                (booking.status === 'accepted' || booking.status === 'in-progress'));
-            
-            if (todayJobs.length === 0) {
-                container.innerHTML = '<div class="empty-state"><p>No jobs scheduled for today</p></div>';
-                return;
-            }
-            
-            container.innerHTML = todayJobs.map(job => `
-                <div class="schedule-item">
-                    <div class="schedule-time">${job.time}</div>
-                    <div class="schedule-details">
-                        <h4>${job.service}</h4>
-                        <p>${job.name} • ${job.phone}</p>
-                        <span class="status-badge status-${job.status}">${job.status}</span>
-                    </div>
-                    ${job.status === 'accepted' ? 
-                        `<button class="btn success" onclick="startJob(${job.id})">Start Job</button>` :
-                        `<button class="btn primary" onclick="completeJob(${job.id})">Complete Job</button>`
+            // Load worker profile for rating
+            fetch(`https://servicenest.onrender.com/api/worker/profile/${workerEmail}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === "SUCCESS" && data.profile) {
+                        document.getElementById('workerRating').textContent = data.profile.rating || '4.9';
                     }
-                </div>
-            `).join('');
-        }
-
-        function loadJobRequests(bookings) {
-            const container = document.getElementById('jobRequests');
-            const pendingJobs = bookings.filter(booking => booking.status === 'pending');
+                })
+                .catch(error => {
+                    console.error('Error loading worker profile:', error);
+                });
             
-            if (pendingJobs.length === 0) {
-                container.innerHTML = '<div class="empty-state"><p>No new job requests</p></div>';
-                return;
+            // Load assigned jobs
+            fetch(`https://servicenest.onrender.com/api/bookings/worker/${workerEmail}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === "SUCCESS") {
+                        const workerBookings = data.bookings || [];
+                        
+                        // Update stats
+                        document.getElementById('totalJobs').textContent = workerBookings.length;
+                        document.getElementById('pendingJobs').textContent = 
+                            workerBookings.filter(b => b.status === 'pending' || b.status === 'accepted').length;
+                        
+                        // Calculate earnings
+                        const completedJobs = workerBookings.filter(b => b.status === 'completed');
+                        const totalEarnings = completedJobs.reduce((sum, job) => sum + (job.price || 500), 0);
+                        document.getElementById('totalEarnings').textContent = `₹${totalEarnings}`;
+                        
+                        // Load today's schedule
+                        loadTodaySchedule(workerBookings);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading worker bookings:', error);
+                    // Fallback to localStorage if API fails
+                    loadFallbackData();
+                });
+            
+            // Load pending job requests
+            fetch('https://servicenest.onrender.com/api/bookings/pending')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === "SUCCESS") {
+                        loadJobRequests(data.bookings || []);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading pending bookings:', error);
+                });
+        }
+    }
+
+    function loadFallbackData() {
+        // Fallback data for demonstration
+        const fallbackBookings = [
+            {
+                id: 1,
+                service: "Plumbing Repair",
+                name: "Rajesh Kumar",
+                phone: "+91 9876543210",
+                date: new Date().toISOString().split('T')[0],
+                time: "10:00 AM",
+                status: "accepted",
+                price: 500
+            },
+            {
+                id: 2,
+                service: "Electrical Work",
+                name: "Priya Sharma",
+                phone: "+91 9876543211",
+                date: new Date().toISOString().split('T')[0],
+                time: "2:00 PM",
+                status: "pending",
+                price: 400
             }
-            
-            container.innerHTML = pendingJobs.map(job => `
-                <div class="job-request-item">
-                    <div class="job-details">
-                        <h4>${job.service}</h4>
-                        <p>${job.name} • ${job.phone}</p>
-                        <p>Date: ${job.date} | Time: ${job.time}</p>
-                        <span class="status-badge status-pending">Pending</span>
-                    </div>
-                    <div class="job-actions">
-                        <button class="btn success" onclick="acceptJob(${job.id})">Accept</button>
-                        <button class="btn warning" onclick="declineJob(${job.id})">Decline</button>
-                    </div>
-                </div>
-            `).join('');
-        }
+        ];
 
-        function acceptJob(jobId) {
-            updateJobStatus(jobId, 'accepted');
-            alert('Job accepted successfully!');
+        document.getElementById('totalJobs').textContent = fallbackBookings.length;
+        document.getElementById('pendingJobs').textContent = 
+            fallbackBookings.filter(b => b.status === 'pending' || b.status === 'accepted').length;
+        document.getElementById('totalEarnings').textContent = '₹900';
+        
+        loadTodaySchedule(fallbackBookings);
+        loadJobRequests(fallbackBookings.filter(b => b.status === 'pending'));
+    }
+
+    function loadTodaySchedule(bookings) {
+        const container = document.getElementById('todaySchedule');
+        const today = new Date().toISOString().split('T')[0];
+        
+        const todayJobs = bookings.filter(booking => booking.date === today && 
+            (booking.status === 'accepted' || booking.status === 'in-progress'));
+        
+        if (todayJobs.length === 0) {
+            container.innerHTML = '<div class="empty-state"><p>No jobs scheduled for today</p></div>';
+            return;
+        }
+        
+        container.innerHTML = todayJobs.map(job => `
+            <div class="schedule-item">
+                <div class="schedule-time">${job.time}</div>
+                <div class="schedule-details">
+                    <h4>${job.service}</h4>
+                    <p>${job.name} • ${job.phone}</p>
+                    <span class="status-badge status-${job.status}">${job.status}</span>
+                </div>
+                ${job.status === 'accepted' ? 
+                    `<button class="btn success" onclick="startJob(${job.id})">Start Job</button>` :
+                    `<button class="btn primary" onclick="completeJob(${job.id})">Complete Job</button>`
+                }
+            </div>
+        `).join('');
+    }
+
+    function loadJobRequests(bookings) {
+        const container = document.getElementById('jobRequests');
+        const pendingJobs = bookings.filter(booking => booking.status === 'pending');
+        
+        if (pendingJobs.length === 0) {
+            container.innerHTML = '<div class="empty-state"><p>No new job requests</p></div>';
+            return;
+        }
+        
+        container.innerHTML = pendingJobs.map(job => `
+            <div class="job-request-item">
+                <div class="job-details">
+                    <h4>${job.service}</h4>
+                    <p>${job.name} • ${job.phone}</p>
+                    <p>Date: ${job.date} | Time: ${job.time}</p>
+                    <span class="status-badge status-pending">Pending</span>
+                </div>
+                <div class="job-actions">
+                    <button class="btn success" onclick="acceptJob(${job.id})">Accept</button>
+                    <button class="btn warning" onclick="declineJob(${job.id})">Decline</button>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    function acceptJob(jobId) {
+        updateJobStatus(jobId, 'accepted');
+        alert('Job accepted successfully!');
+        location.reload();
+    }
+
+    function declineJob(jobId) {
+        if (confirm('Are you sure you want to decline this job?')) {
+            updateJobStatus(jobId, 'declined');
             location.reload();
         }
+    }
 
-        function declineJob(jobId) {
-            if (confirm('Are you sure you want to decline this job?')) {
-                updateJobStatus(jobId, 'declined');
-                location.reload();
-            }
-        }
+    function startJob(jobId) {
+        updateJobStatus(jobId, 'in-progress');
+        alert('Job started!');
+        location.reload();
+    }
 
-        function startJob(jobId) {
-            updateJobStatus(jobId, 'in-progress');
-            alert('Job started!');
+    function completeJob(jobId) {
+        if (confirm('Mark this job as completed?')) {
+            updateJobStatus(jobId, 'completed');
+            alert('Job completed successfully!');
             location.reload();
         }
+    }
 
-        function completeJob(jobId) {
-            if (confirm('Mark this job as completed?')) {
-                updateJobStatus(jobId, 'completed');
-                alert('Job completed successfully!');
-                location.reload();
-            }
+    function updateJobStatus(jobId, status) {
+        // In a real application, you would call your backend API
+        // For now, we'll update localStorage
+        let bookings = JSON.parse(localStorage.getItem('bookings') || '[]');
+        const jobIndex = bookings.findIndex(b => b.id === jobId);
+        if (jobIndex !== -1) {
+            bookings[jobIndex].status = status;
+            localStorage.setItem('bookings', JSON.stringify(bookings));
         }
+        
+        // Call backend API if available
+        fetch(`https://servicenest.onrender.com/api/bookings/${jobId}/status`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ status: status })
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Job status updated:', data);
+        })
+        .catch(error => {
+            console.error('Error updating job status:', error);
+        });
+    }
 
-        function updateJobStatus(jobId, status) {
-            // In a real application, you would call your backend API
-            // For now, we'll update localStorage
-            let bookings = JSON.parse(localStorage.getItem('bookings') || '[]');
-            const jobIndex = bookings.findIndex(b => b.id === jobId);
-            if (jobIndex !== -1) {
-                bookings[jobIndex].status = status;
-                localStorage.setItem('bookings', JSON.stringify(bookings));
-            }
-            
-            // Call backend API if available
-            fetch(`http://localhost:8081/api/bookings/${jobId}/status`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ status: status })
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Job status updated:', data);
-            })
-            .catch(error => {
-                console.error('Error updating job status:', error);
-            });
-        }
+    function updateAvailability() {
+        alert('Availability update feature coming soon!');
+    }
 
-        function updateAvailability() {
-            alert('Availability update feature coming soon!');
-        }
+    function updateSkills() {
+        alert('Skills update feature coming soon!');
+    }
 
-        function updateSkills() {
-            alert('Skills update feature coming soon!');
-        }
-
-        function logout() {
-            localStorage.removeItem('userEmail');
-            localStorage.removeItem('userRole');
-            window.location.href = 'index.html';
-        }
-    </script>
+    function logout() {
+        localStorage.removeItem('userEmail');
+        localStorage.removeItem('userRole');
+        window.location.href = 'index.html';
+    }
+</script>
 </body>
 </html>
